@@ -1,48 +1,149 @@
-#!name=Panels
-#!desc=信息面板
+#!name=脚本合集
+#!desc=最后更新时间 2022-04-20 23:22
+#!system=ios
 
-[Panel]
-#Surge Pro标题,可显示启动时间,点击刷新为重载配置
-SurgePro_ReloadProfile = script-name=SurgePro_ReloadProfile,update-interval=1
+# 分割线——————————————————————————
 
-# 节假日查询
-timecard = script-name=timecard,update-interval=3600
-疫情统计 = script-name=疫情统计, title=新冠疫情查询, content=请刷新, update-interval=600
+[Rule]
+# > 爱奇艺 去暂停广告
+DOMAIN-SUFFIX,cupid.iqiyi.com,REJECT
+# > 人人视频 去广告
+AND,((USER-AGENT,PUClient*),(NOT,((DOMAIN-SUFFIX,rr.tv)))),REJECT
+URL-REGEX,^https?:\/\/api\.rr\.tv\/(?:ad\/getAll$|storage/business/rootName/app/homePage),REJECT
+# > 优酷 去广告
+DOMAIN, iyes.youku.com,REJECT
+URL-REGEX,^http:\/\/.*\.cp31\.ott\.cibntv\.net\/youku\/,REJECT-TINYGIF
+# > 京东 去广告
+URL-REGEX,^https?:\/\/api\.m\.jd\.com\/client\.action\?functionId=start$,REJECT-TINYGIF
+# > 腾讯视频 修正+去广告
+URL-REGEX,^https?:\/\/pgdt\.gtimg\.cn,REJECT
+URL-REGEX,^https?:\/\/c\.l\.qq\/.com,REJECT
+# > 掌阅 去广告
+URL-REGEX,^https?:\/\/ih2\.ireader\.com\/zyapi\/bookstore\/ad\/,REJECT-TINYGIF
+URL-REGEX,^https?:\/\/ih2\.ireader\.com\/zyapi\/self\/screen\/ad,REJECT-TINYGIF
+URL-REGEX,^https?:\/\/ih2\.ireader\.com\/zycl\/api\/ad\/,REJECT-TINYGIF
+URL-REGEX,^https?:\/\/ih2\.ireader\.com\/zycl\/api\/ad\/,REJECT-TINYGIF
+# > 作业帮 去广告
+URL-REGEX,^https?:\/\/www\.zybang\.com\/adx\/,REJECT-TINYGIF
+# > HDOBOX 去广告
+DOMAIN-SUFFIX,applovin.com,REJECT
+DOMAIN-SUFFIX,applvn.com,REJECT
+# > 交管12123 去广告
+URL-REGEX,^https:\/\/gab\.122\.gov\.cn\/eapp\/m\/sysquery\/adver$,REJECT
+# > 小米运动 去广告 
+URL-REGEX,^https:\/\/api-mifit-cn2\.huami\.com\/discovery\/mi\/cards\/startpage_ad,REJECT
+# > 京东极速版 去广告
+URL-REGEX,https://api.m.jd.com/client.action\?functionId=lite_advertising,REJECT
+# > 滴滴出行 去广告
+//01 安全提示横幅
+URL-REGEX,^https:\/\/guard\.sec\.xiaojukeji\.com\/api\/guard\/psg\/v2\/getShieldStatus,REJECT
+//02 底部打车&代价推荐
+URL-REGEX,^https:\/\/conf\.diditaxi\.com\.cn\/one,REJECT
+//03 福利专区-金融服务-公交-骑车-滴滴乐园
+URL-REGEX,^https:\/\/conf\.diditaxi\.com\.cn\/nav\/widget,REJECT
+//04 接送机-优惠商城
+URL-REGEX,^https:\/\/api\.udache\.com\/gulfstream,REJECT
+//05 主页 领任务
+URL-REGEX,^https:\/\/conf\.diditaxi\.com\.cn\/api\/(component|fusion|dynamicmodule|usercenter),REJECT
+URL-REGEX,^https:\/\/conf\.diditaxi\.com\.cn\/dynamic,REJECT
+//06 主页 非主流式悬浮挂件
+URL-REGEX,^https:\/\/res\.xiaojukeji\.com\/resapi\/activity\/mget,REJECT
+//07 商城
+URL-REGEX,^https:\/\/shop-gw\.chengxinyouxuan\.com\/(route|indexConfig|apolloConfig|getShopTuanInfos),REJECT
+//08 开屏广告
+URL-REGEX,^https:\/\/img-ys011\.didistatic\.com\/static,REJECT
+//09 骑行
+URL-REGEX,^https:\/\/pt-starimg\.didistatic\.com\/static,REJECT
+# > 云闪付 去广告
+URL-REGEX,^https:\/\/wallet\.95516\.com\/s\/wl\/icon\/long,REJECT
+# > 狮桥司机 去广告
+URL-REGEX,^https:\/\/api\.daoshang\.online\/cloud-common\/startupPageNew\/query$,REJECT
+# > 威锋 去广告
+URL-REGEX,^https:\/\/api\.wfdata\.club\/v2\/yesfeng\/(infoCenterAd|yesList),REJECT
+# > 贝壳网 去广告
+URL-REGEX,^https:\/\/bkw-legacy\.oss-cn-shenzhen\.aliyuncs\.com\/cms\/ad,REJECT
 
-NET_info = script-name=NET_info,update-interval=1
-#Netflix查询
-nf_check = script-name=nf_check, title="Netflix 解锁检测", content="请刷新", update-interval=36000
-#Disney查询
-disney_check = script-name=disney_check, title=Disney+ 解锁检测, content=请刷新, update-interval=36000
+# 分割线——————————————————————————
 
-#Disney+策略组自动控制
-DisneySelect = script-name=DisneySelecter, update-interval=3600
+[URL Rewrite]
+# > TikTok换区
+(更换307前面JP JP=日本 KR=韩国 HK=香港 US=美国）
+(?<=&mcc_mnc=)4 2 307
+(?<=_region=)CN(?=&) JP 307
+(^https?:\/\/*\.\w{4}okv.com\/.+&.+)(\d{2}\.3\.\d)(.+) $118.0$3 302
+^(https?:\/\/(tnc|dm)[\w-]+\.\w+\.com\/.+)(\?)(.+) $1$3 302
 
-#Netflix策略组自动控制
-NetflixSelect = script-name=NetflixSelect, update-interval=3600
+# 分割线——————————————————————————
+
+
+# 分割线——————————————————————————
 
 [Script]
-#附带重载配置,Surge Pro标题,可显示启动时间,点击刷新为重载配置
-SurgePro_ReloadProfile = type=generic,timeout=10,script-path= https://raw.githubusercontent.com/fishingworld/something/main/PanelScripts/surgepro_reloadprofile.js ,argument=icon=crown.fill&color=#f6c970
+# > 奈飞 评分
+奈飞评分 = type=http-request,pattern=^https?:\/\/ios(-.*)?\.prod\.ftl\.netflix\.com\/iosui\/user/.+path=%5B%22videos%22%2C%\d+%22%2C%22summary%22%5D,script-path=https://raw.githubusercontent.com/yichahucha/surge/master/nf_rating.js
+奈飞评分 = type=http-response,requires-body=1,pattern=^https?:\/\/ios(-.*)?\.prod\.ftl\.netflix\.com\/iosui\/user/.+path=%5B%22videos%22%2C%\d+%22%2C%22summary%22%5D,script-path=https://raw.githubusercontent.com/yichahucha/surge/master/nf_rating.js
+单集评分 = type=http-response,pattern=^https?:\/\/ios(-.*)?\.prod\.ftl\.netflix\.com\/iosui\/warmer/.+type=show-ath,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/yichahucha/surge/master/nf_rating_season.js
+# > 人人视频 去广告
+人人视频 = type=http-response,requires-body=true,pattern=^https?:\/\/api\.rr\.tv\/v\dplus\/index\/channel,script-path=https://Choler.github.io/Surge/Script/rrsp.js
+# > 人人视频 解锁
+人人视频 = requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Crack/rrtv.js,type=http-response,pattern=^https:\/\/api\.rr\.tv\/user\/privilege\/list
+人人视频 = requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Crack/rrtv.js,type=http-response,pattern=^https:\/\/api\.rr\.tv\/ad\/getAll
+人人视频 = requires-body=1,script-path=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Crack/rrtv.js,type=http-response,pattern=^https:\/\/api\.rr\.tv\/drama\/app\/get_combined_drama_detail
+# > 金山WPS vip
+办公解锁 = requires-body=1,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Wps.js,type=http-response,pattern=^https://account.wps.*/api/users/
+# > 扫描全能王 pro
+扫描全能 = requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/id77/QuantumultX/master/Script/camscanner.js,type=http-response,pattern=https:\/\/(api|api-cs)\.intsig\.net\/purchase\/cs\/query_property\?,script-update-interval=0
+# > Dayone vip
+日记解锁 = type=http-response,pattern=^https:\/\/dayone\.(me|app)\/api\/(users|v2\/users\/(account-status|receipt))$,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/langkhach270389/Surge-LK/main/scripts/langkhach/dayone.js,script-update-interval=0
+# > 彩云天气 svip
+彩云天气 = type=http-response,requires-body=1,max-size=0,pattern=https?:\/\/biz\.caiyunapp\.com\/(membership_rights|v2\/user),script-path=https://raw.githubusercontent.com/githubdulong/Script/master/cytq.js
+# > 京东App 历史价格 
+京东比价 = type=http-response,requires-body=1,pattern=^https?://api\.m\.jd\.com/client\.action\?functionId=(wareBusiness|serverConfig|basicConfig),script-path=https://raw.githubusercontent.com/githubdulong/Script/master/jd_price.js
+# > bilbii 换区、评分
+哔哩换区 = type=http-response,pattern=^https:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/(pgc\/view\/v\d\/app\/season|x\/v\d\/search\/defaultwords)\?access_key,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Bili_Auto_Regions.js
+哔哩搜索 = type=http-request,pattern=^https:\/\/ap(p|i)\.bili(bili|api)\.(com|net)\/x\/v\d\/search(\/type)?\?.+?%20(%E6%B8%AF|%E5%8F%B0|%E4%B8%AD)&,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Bili_Auto_Regions.js
+# > 百度云盘 解锁
+百度云盘 = type=http-response,pattern=https:\/\/pan\.baidu\.com\/rest\/2\.0\/membership\/user,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/ddgksf2013/Cuttlefish/master/Crack/bdcloud.js,script-update-interval=0
+# > MIX 解锁
+滤镜解锁 = requires-body=1,script-path=https://raw.githubusercontent.com/githubdulong/Script/master/mix.js,type=http-response,pattern= ^https:\/\/bmall\.camera360\.com\/api\/mix\/recovery$
+# > vsco 解锁
+滤镜破解 = type=http-response,pattern=^https:\/\/(api\.revenuecat\.com\/v\d\/subscribers|vsco\.co\/api\/subscriptions\/\d\.\d\/user-subscriptions)\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/githubdulong/Script/master/vsco.js,script-update-interval=0
+# > Grow 解锁 api.revenuecat.com
+运动解锁 = type=http-response,pattern=https:\/\/api\.revenuecat\.com,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/langkhach270389/Surge-LK/main/scripts/langkhach/revenuecat.js,script-update-interval=-1
+# > 泼辣修图 解锁
+泼辣修图 = type=http-response,pattern=^https:\/\/api\.polaxiong\.com\/v1\/payments\/appleiap\/receipts\/confirmation,script-path=https://raw.githubusercontent.com/NobyDa/Script/master/Surge/JS/Polarr.js
+# > 豆瓣电影 搜索
+豆瓣电影 = type=http-response,pattern=^https?:\/\/m\.douban\.com\/movie\/subject\/\d+\/,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/I-am-R-E/QuantumultX/main/JavaScript/DouBan.js
+# > IT之家 去广告
+数码之家 = type=http-response,pattern=^https?:\/\/api\.ithome\.com\/json\/(newslist|listpage)\/news,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/githubdulong/Script/master/ithome.js
+# > 小红书 去广告
+红书广告 = type=http-response,pattern=^https?:\/\/edith\.xiaohongshu\.com\/api\/sns\/v2\/system_service\/splash_config,requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/chouchoui/QuanX/master/Scripts/xiaohongshu/xiaohongshu.ad.js
+# > 私有仓库 raw.githubusercontent.com, gist.githubusercontent.com
+//私有仓库 = type=http-request,requires-body=0,pattern=^https?:\/\/(raw|gist)\.githubusercontent.com,script-path=https://raw.githubusercontent.com/Peng-YM/QuanX/master/Rewrites/GithubPrivate/github-private-repo.js
+# > 美图秀秀
+美图秀秀 = requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/githubdulong/Script/master/Mtxx.js,type=http-response,pattern=^https?://(api|h5).xiuxiu.meitu.com/(v1/user/show.json|v1/vip/vip_show.json|v1/vip/prompt/query.json|v1/h5/vip/sub_detail.json|v1/h5/user/self_show.json|v1/h5/vip/user_detail.json|v1/vip/prompt/query.json|v1/vip/prompt/query.json)
+# > xmind思维导图 解锁
+思维导图 = type=http-response,pattern=https?:\/\/.*\.xmind\..*\/_res\/(devices|user_sub_status|appstore/sub),requires-body=1,max-size=0,script-path=https://raw.githubusercontent.com/langkhach270389/Surge-LK/main/scripts/langkhach/xmind.js,script-update-interval=0
+# > 模块订阅(单独添加)
+//官方模块 https://raw.githubusercontent.com/githubdulong/Script/master/Surge/Surge.sgmodule
+//爬虫复写去广告 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rewrite/Surge/Advertising/Advertising.sgmodule
+//什么值得买去广告 https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/script/smzdm/smzdm_remove_ads.sgmodule
+//贴吧去除广告 https://raw.githubusercontent.com/app2smile/rules/master/module/tieba.sgmodule
+//spotify解锁 https://raw.githubusercontent.com/app2smile/rules/master/module/spotify.module
+//Siri区域解锁 https://raw.githubusercontent.com/VirgilClyne/iRingo/main/sgmodule/Siri_for_Uppercase_PROXY.sgmodule
+//京东助手(注入式需key）https://raw.githubusercontent.com/githubdulong/Script/master/jdHelper.sgmodule
+//京东联盟转链（联盟、助手二选一）https://raw.githubusercontent.com/githubdulong/Script/master/Surge/jdapp_to_union.sgmodule
+//浏览器搜索 https://raw.githubusercontent.com/githubdulong/Script/master/Surge/Q-Search_All_in_one.sgmodule
+//京东半自动销卡 https://raw.githubusercontent.com/githubdulong/Script/master/Jd_unbindCard.sgmodule
+//TF下载修正 https://raw.githubusercontent.com/githubdulong/Script/master/Surge/TestFlightDownload.sgmodule
+//字幕翻译 https://raw.githubusercontent.com/Neurogram-R/Surge/master/module/Dualsub.sgmodule 指令https://www.icloud.com/shortcuts/136b52e6452b4a10b3ea647f925cddd0
+//跳过代理检测 https://raw.githubusercontent.com/mieqq/mieqq/master/skip-proxy-lists.sgmodule
+//SUB订阅管理 https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/config/Surge.sgmodule
+//Emby解锁 https://raw.githubusercontent.com/rartv/EmbyPublic/test/surge/emby-plugin.sgmodule
+//空气质量 https://raw.githubusercontent.com/VirgilClyne/iRingo/main/sgmodule/Weather.sgmodule
+//模块更新捷径 https://www.icloud.com/shortcuts/67c3ace4fb3a4f9ebbe8d3184cd82e39
 
-#網路詳情 标题显示为根节点名
-#应当修改的字段 group 代理策略组名称
-NET_info = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/ProxyStorage/For-Own-Use/master/Surge/script/net-info.js,argument=icon=externaldrive.connected.to.line.below&color=#9a7ff7&group=🐷 Proxy
+# 分割线——————————————————————————
 
-# 节假日提醒
-timecard = type=generic,timeout=10,script-path=https://raw.githubusercontent.com/smartmimi/conf/master/surge/timecard.js
-疫情统计 = type=generic, script-path=https://raw.githubusercontent.com/kkfive/Proxy_Rules/main/Surge/script/Covid19.js
-# Netflix+检测
-nf_check = type=generic,timeout=5,script-path=https://gist.githubusercontent.com/Hyseen/b06e911a41036ebc36acf04ddebe7b9a/raw/nf_check.js
-#Disney+检测
-disney_check = type=generic,timeout=5,script-path=https://gist.githubusercontent.com/Hyseen/729fc4c3ac28c3f2e7c4a832d81780f3/raw/disney_check.js
-
-#disney+策略组控制
-#应当修改的字段 disneyGroup Disney+的策略组名称
-#详情请阅读：https://github.com/fishingworld/something/tree/main/DisneySelect
-DisneySelecter = type=generic, script-path=https://raw.githubusercontent.com/fishingworld/something/main/DisneySelect/disney_selecter.js, argument=icon1=checkmark.circle&color1=#55ba94&icon2=cursorarrow.click.badge.clock&color2=#ed6c84&icon3=xmark.shield&color3=#AF52DE&disneyGroup=Disney+
-DisneyChecker = type=cron,cronexp=35 4 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/fishingworld/something/main/DisneySelect/disney_checker.js,script-update-interval=86400,control-api=1#netflix策略组控制
-#必须更改的字段 netflixGroup 填写你Netflix策略组名称
-#详情请阅读：https://github.com/fishingworld/something/blob/main/NetflixSelect/README.md
-NetflixSelect = type=generic, script-path=https://raw.githubusercontent.com/fishingworld/something/main/NetflixSelect/nf_autoselect.js, argument=icon1=checkmark.circle&color1=#55ba94&icon2=checkmark.circle.trianglebadge.exclamationmark&color2=#9a9ced&icon3=hand.raised.circle&color3=#ea5532&netflixGroup=Netflix
-NetflixChecker = type=cron,cronexp=5 4 * * *,wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/fishingworld/something/main/NetflixSelect/nf_autocheck.js ,script-update-interval=0,control-api=1
+[MITM]
+hostname = %INSERT% -*.amemv.com, -*.snssdk.com, *.googlevideo.com, api.rr.tv, account.wps.cn, ap*.intsig.net, dayone.*, ios-*.prod.ftl.netflix.com,ios.prod.ftl.netflix.com, *.lagoapps.com, api.meiyan.com, biz.caiyunapp.com, raw.githubusercontent.com, spclient.wg.spotify.com, ap?.bilibili.com, ap?.biliapi.net, pan.baidu.com, btrace.qq.com, bmall.camera360.com, *.tiktokv.com,*.byteoversea.com,*.tik-tokapi.com, vsco.co, img.zuoyebang.cc, security.wechat.com, api.polaxiong.com, m.douban.com, api.ithome.com, api.m.jd.com, gab.122.gov.cn, *.xmind.*, api-mifit-cn2.huami.com, as.xiaojukeji.com, pt-starimg.didistatic.com, security.xiaojukeji.com, guard.sec.xiaojukeji.com, conf.diditaxi.com.cn, api.udache.com, res.xiaojukeji.com, shop-gw.chengxinyouxuan.com, img-ys011.didistatic.com, wallet.95516.com, pgdt.gtimg.cn, c.l.qq.com, api.daoshang.online, api.wfdata.club, bkw-legacy.oss-cn-shenzhen.aliyuncs.com, edith.xiaohongshu.com, api.xiuxiu.meitu.com, h5.xiuxiu.meitu.com, boxjs.net, boxjs.com
