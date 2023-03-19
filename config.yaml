@@ -95,17 +95,6 @@ u: &u
   use:
     - Ytoo
     - Mesl
-    - test2
-    - test3
-    - test4
-    - test5
-    - test6
-    - test7
-    - test8
-    - test9
-    - test10
-    - test11
-    - test12
 
 pr: &pr
   type: select
@@ -144,56 +133,6 @@ proxy-providers:
     <<: *p
     url: "https://in.mesl.cloud/api/v1/client/subscribe?token=bfff387a443d09c098753eb6ae4a1fc8"
     path: ./proxy_providers/Mesl.yaml
-
-  test3:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test3.yaml
-
-  test4:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test4.yaml
-
-  test5:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test5.yaml
-
-  test6:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test6.yaml
-
-  test7:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test7.yaml
-
-  test8:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test8.yaml
-
-  test9:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test9.yaml
-
-  test10:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test10.yaml
-
-  test11:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test11.yaml
-
-  test12:
-    <<: *p
-    url: ""
-    path: ./proxy_providers/test12.yaml
 
 
 proxy-groups:
